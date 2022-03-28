@@ -7,10 +7,29 @@ public class Driver : MonoBehaviour
 
     [SerializeField] float steerSpeed = 200f; //serailize this variable. This attribute will make them IDE editable;
     [SerializeField] float moveSpeed = 10f;
+    
+    [SerializeField] float slowSpeed = 7f;
+    [SerializeField] float boostSpeed = 14f;
+
+    bool isBoosted;
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.tag == "Booster" && !isBoosted){
+            moveSpeed=boostSpeed;
+            isBoosted=true;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if(isBoosted){
+            moveSpeed=slowSpeed;
+            isBoosted=false;
+        }
     }
 
     // Update is called once per frame
